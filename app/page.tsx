@@ -1,16 +1,20 @@
 'use client'
 
 import Header from "@/components/Header";
+import Request from "@/components/Request";
 import Sidebar from "@/components/Sidebar";
 
 export default function Home() {
   return (
     <div className="flex bg-black/90">
       <Sidebar />
-      <main className="flex flex-col w-full text-black min-h-screen items-center justify-between">
+      <div className="flex flex-col w-full text-black min-h-screen items-center justify-between">
       <Header/>
-        <h1>HTTPie</h1>
-      </main>
+        
+        <main className="flex items-center gap-10 h-full w-full p-5">
+          <Request/>
+        </main>
+      </div>
     </div>
   );
 }

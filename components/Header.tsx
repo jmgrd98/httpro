@@ -59,7 +59,7 @@ const Header = () => {
 
   return (
     <div className='w-full h-[100px] top-0 bg-black/20 p-3 flex items-center gap-5 justify-between'>
-      <Select onValueChange={(e) => handleMethodChange(e)}>
+      <Select value={method} onValueChange={(e) => handleMethodChange(e)}>
         <SelectTrigger className="w-[180px] bg-transparent text-white border-white/50">
           <SelectValue placeholder="GET" />
         </SelectTrigger>
@@ -73,8 +73,8 @@ const Header = () => {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <Input type="text" placeholder="http://localhost:3000" className="border-white/50" />
-      <Button  >Enviar</Button>
+      <Input value={url} onChange={(e) => handleUrlChange(e.target.value)} type="text" placeholder="http://localhost:3000" className="border-white/50 text-white" />
+      <Button onClick={validateAndSubmit} >Enviar</Button>
     </div>
   )
 }
