@@ -10,10 +10,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { IoMdKey } from "react-icons/io";
 import { Button } from './ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
+import { Input } from './ui/input';
 
 function Request() {
     const { 
-        params,
+        // params,
         headers,
         tokens,
         updateParams,
@@ -27,6 +28,8 @@ function Request() {
     const [request, setRequest] = useState('Params');
     const [showToken, setShowToken] = useState(true);
     const [json, setJson] = useState(null);
+    const [params, setParams] = useState([{ name: '', value: '' }]);
+
 
     // useEffect(() => {
     //     if (aiRequest) {
@@ -42,7 +45,6 @@ function Request() {
     //         }
     //     }
     // }, [aiRequest]);
-
     const handleCopy = () => {
         navigator.clipboard.writeText(body);
         setCopied(true);
@@ -50,16 +52,6 @@ function Request() {
             setCopied(false);
         }, 2000);
     };
-
-const addField = () => {
-    if (request === 'Params') {
-        updateParams([...params, { name: '', value: '' }]);
-    } else if (request === 'Headers') {
-        updateHeaders([...headers, { name: '', value: '' }]);
-    } else if (request === 'Auth') {
-        updateTokens([...tokens, { name: '', value: ''}])
-    }
-};
 
 const handleFieldChange = (index: number, field: string, value: string) => {
       if ((field == 'header' || field == 'auth' || field == 'param') && value === '') {
@@ -82,21 +74,35 @@ const handleFieldChange = (index: number, field: string, value: string) => {
     }
 };
 
-const deleteField = (index: number) => {
-    if (request === 'Params') {
-        const updatedParams = [...params];
-        updatedParams.splice(index, 1);
-        updateParams(updatedParams);
-    } else if (request === 'Headers') {
-        const updatedHeaders = [...headers];
-        updatedHeaders.splice(index, 1);
-        updateHeaders(updatedHeaders);
-    } else if (request === 'Auth') {
-        const updatedTokens = [...tokens];
-        updatedTokens.splice(index, 1);
-        updateTokens(updatedTokens);
-    }
+const addField = () => {
+  if (request === 'Params') {
+      const updatedParams = [...params, { name: '', value: '' }];
+      setParams(updatedParams); // Update params state
+  } else if (request === 'Headers') {
+      const updatedHeaders = [...headers, { name: '', value: '' }];
+      updateHeaders(updatedHeaders); // Update headers state using updateHeaders function
+  } else if (request === 'Auth') {
+      const updatedTokens = [...tokens, { name: '', value: '' }];
+      updateTokens(updatedTokens); // Update tokens state using updateTokens function
+  }
 };
+
+const deleteField = (index: number) => {
+  if (request === 'Params') {
+      const updatedParams = [...params];
+      updatedParams.splice(index, 1);
+      setParams(updatedParams); // Update params state
+  } else if (request === 'Headers') {
+      const updatedHeaders = [...headers];
+      updatedHeaders.splice(index, 1);
+      updateHeaders(updatedHeaders); // Update headers state using updateHeaders function
+  } else if (request === 'Auth') {
+      const updatedTokens = [...tokens];
+      updatedTokens.splice(index, 1);
+      updateTokens(updatedTokens); // Update tokens state using updateTokens function
+  }
+};
+
   
     const handleBodyChange = (value: any) => {
         updateBody(value);
@@ -110,106 +116,50 @@ const deleteField = (index: number) => {
                 
             </div>
   
-            {(request === 'Params' || request === 'Headers' || request === 'Auth') ? (
-              <div className='mt-5 p-3 rounded-xl overflow-y-scroll max-h-[400px] relative'>
-                  {/* <Button onClick={addField} variant='alert' className='flex items-center gap-2 mb-[5px]'>
-                  <p>
-                    Add{' '}
-                    {request === 'Params'
-                        ? 'param'
-                        : request === 'Headers'
-                        ? 'header'
-                        : request === 'Auth'
-                        ? 'token'
-                        : null}
-                    </p>
-                      <CiCirclePlus style={{ width: 25, height: 25 }} />
-                  </Button> */}
-                  <Tabs defaultValue="account" className="w-[400px]">
+            <Tabs defaultValue="params" className="w-full">
                     <TabsList>
                       <TabsTrigger value="params">Params</TabsTrigger>
                       <TabsTrigger value="headers">Headers</TabsTrigger>
                       <TabsTrigger value="auth">Auth</TabsTrigger>
                       <TabsTrigger value="body">Body</TabsTrigger>
                     </TabsList>
-                    <TabsContent value="account">Make changes to your account here.</TabsContent>
-                    <TabsContent value="password">Change your password here.</TabsContent>
-                  </Tabs>
-
-
-                  {((request === 'Params' && request !== 'Auth') ? params : headers).map((field, index) => (
-                      <div className='flex items-center gap-3 mb-2' key={index}>
-                          <input
+                    <TabsContent className='bg-black/50 p-5 text-white/90 rounded h-full' value="params">
+                      <Button variant={'purple'} onClick={addField} className='flex gap-3 mb-3'>
+                        <p>Add</p>
+                        <CiCirclePlus style={{ width: 25, height: 25, cursor: 'pointer'}}/>
+                      </Button>
+                      {params.map((field, index) => (
+                        <div className='flex items-center gap-3 mb-2'>
+                          <Input
                               className='p-2 rounded'
                               type='text'
                               placeholder='name'
                               value={field.name}
                               onChange={(e) => handleFieldChange(index, 'name', e.target.value)}
                           />
-                          <input
+                          <Input
                               className='p-2 rounded'
                               type='text'
                               placeholder='value'
                               value={field.value}
                               onChange={(e) => handleFieldChange(index, 'value', e.target.value)}
                           />
-                          <FaTrash onClick={() => deleteField(index)} style={{ cursor: 'pointer' }} />
+                          <FaTrash 
+                            onClick={() => deleteField(index)} 
+                            className="text-red-500 w-10 h-10 cursor-pointer hover:text-red-500/50"
+                          />
                       </div>
-                  ))}
+                      ))}
+                    
+                    
+                        
+                    </TabsContent>
+                    <TabsContent value="headers">Change your password here.</TabsContent>
+                    <TabsContent value="auth">Change your password here.</TabsContent>
+                    <TabsContent value="body">Change your password here.</TabsContent>
+                  </Tabs>
 
-              </div>
-          ) : null}
-
-            {request === 'Auth' ? (
-                <div className='mt-5 bg-gray-300 p-3 rounded-xl overflow-y-scroll max-h-[400px] relative flex flex-col gap-5'>
-                    {tokens.map((token, index) => (
-                        <div className='flex items-center gap-3' key={index}>
-                            <IoMdKey />
-                            <div style={{ position: 'relative', width: '100%' }}>
-                                <input
-                                    key={index}
-                                    className='p-2 rounded w-full'
-                                    type={showToken ? 'text' : 'password'}
-                                    placeholder='token'
-                                    value={token.value}
-                                    onChange={(e) => handleFieldChange(index, 'value', e.target.value)}
-                                />
-                                {showToken ? (
-                                    <FaEyeSlash 
-                                        onClick={() => setShowToken(false)} 
-                                        style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', right: '10px', cursor: 'pointer' }} 
-                                    />
-                                ) : (
-                                    <FaEye 
-                                        onClick={() => setShowToken(true)} 
-                                        style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', right: '10px', cursor: 'pointer' }} 
-                                    />
-                                )}
-                            </div>
-                            <FaTrash onClick={() => deleteField(index)} style={{ cursor: 'pointer' }} />
-                        </div>
-                    ))}
-                </div>
-            ) : null}
-  
-            {request === 'Body' ? (
-                <div className='mt-5 bg-gray-300 p-3 rounded-xl overflow-y-scroll max-h-[400px] relative'>
-                    <CodeEditor
-                        value={aiRequest ? json : body}
-                        language="json"
-                        placeholder="Write your JSON here"
-                        onChange={(e) => handleBodyChange(e.target.value)}
-                        padding={15}
-                        style={{
-                            backgroundColor: "#f5f5f5",
-                            fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-                        }}
-                    />
-                    <button onClick={handleCopy} className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-2">
-                        {copied ? <FaCheck /> : <FaCopy />}
-                    </button>
-                </div>
-            ) : null}
+            
         </section>
 
         <ToastContainer

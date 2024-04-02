@@ -68,8 +68,8 @@ const Sidebar = () => {
         <div className="flex flex-col gap-2 mb-10">
           <p className="text-[#F3676C] font-mono text text-3xl font-bold">HTTPro</p>
           <Button className="flex gap-2" variant='secondary' onClick={() => addNewRequest()}>
-            <CiCirclePlus style={{ width: 25, height: 25, cursor: 'pointer'}}/>
             <p>Save request</p>
+            <CiCirclePlus style={{ width: 25, height: 25, cursor: 'pointer'}}/>
           </Button>
         </div>
       </div>

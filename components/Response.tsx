@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FaCopy, FaCheck } from 'react-icons/fa';
 import { useMethodUrlContext } from "../context/MethodUrlContext";
 import { FaFileExport } from "react-icons/fa";
+import { Badge } from "./ui/badge";
 
 function Response() {
   const { method, message, response } = useMethodUrlContext();
@@ -19,7 +20,7 @@ function Response() {
     }
   };
 
-  const getColorByStatus = (status) => {
+  const getColorByStatus = (status: number) => {
     if (status >= 200 && status < 300) {
       return 'success';
     } else if (status >= 400 && status < 600) {
@@ -40,11 +41,10 @@ function Response() {
           </div>
         )}
         {response && 
-          <Chip 
-            label={`${response.status} ${response.statusText}`}
-            color={getColorByStatus(response.status)}
-            sx={{ width: '25%', fontWeight: 'bold'  }} 
-          />
+          <Badge 
+            variant={getColorByStatus(response.status)}
+            className="w-[25%] font-bold"
+          >${response.status} ${response.statusText}</Badge>
         }
       </div>
       {response && response.status >= 400 && (
