@@ -1,11 +1,15 @@
 'use client'
 
 import { Button } from "./ui/button"
+import UserAvatar from "./UserAvatar"
 
 const Sidebar = () => {
   return (
-    <div className="w-1/6 p-5 flex flex-col items-center rounded-r-xl bg-slate-900/50 border-white border-r-2 h-screen left-0">
-      <p>Sidebar</p>
+    <div className="w-1/6 p-5 flex flex-col justify-evenly items-center rounded-r-xl bg-black/50 border-black/90 border-r h-screen left-0">
+      <div className="flex items-center gap-5">
+        <UserAvatar/>
+        <p className="text-[#F3676C] text-3xl font-bold">HTTPro</p>
+      </div>
       <Button  >Clicar</Button>
     </div>
   )
