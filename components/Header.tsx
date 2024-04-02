@@ -12,11 +12,54 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { toast, ToastContainer } from 'react-toastify';
+import { useMemo } from "react"
+import { useMethodUrlContext } from "@/context/MethodUrlContext"
 
 const Header = () => {
+
+  const { method, updateMethod, url, updateUrl, aiRequest, handleSubmit } = useMethodUrlContext();
+
+//   const { httpVerb, endpoint } = useMemo(() => {
+//     let method = '';
+//     let endpoint = '';
+
+//     if (aiRequest && aiRequest.content) {
+//         const lines = aiRequest.content.split('\n');
+//         if (lines.length > 0) {
+//             const firstLine = lines[0].trim();
+//             const [parsedMethod, parsedEndpoint] = firstLine.split(' ');
+//             if (parsedMethod && parsedEndpoint) {
+//                 method = parsedMethod;
+//                 endpoint = parsedEndpoint;
+//                 console.log(method)
+//             }
+//         }
+//     }
+//     console.log(method)
+//     return { httpVerb: method, endpoint };
+// }, [aiRequest]);
+
+  const validateAndSubmit = () => {
+    if (url === '') {
+      toast.error('Enter a URL');
+      return;
+    }
+    handleSubmit();
+  }
+
+  const handleMethodChange = (method: string) => {
+    updateMethod(method);
+  };
+
+  const handleUrlChange = (url: string) => {
+    updateUrl(url);
+  };
+
+
   return (
     <div className='w-full h-[100px] top-0 bg-black/20 p-3 flex items-center gap-5 justify-between'>
-      <Select>
+      <Select onValueChange={(e) => handleMethodChange(e)}>
         <SelectTrigger className="w-[180px] bg-transparent text-white border-white/50">
           <SelectValue placeholder="GET" />
         </SelectTrigger>

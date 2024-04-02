@@ -29,25 +29,25 @@ const Sidebar = () => {
   };
 
   const getColorByMethod = (requestMethod: any, url?: string) => {
-    let color = ''
+    let color: string = ''
     switch (requestMethod){
       case 'GET':
-        color = 'secondary'
+        color = 'default'
         break;
       case 'POST':
         color = 'success'
         break;
       case 'PUT':
-        color = 'secondary'
+        color = 'alert'
         break;
       case 'PATCH':
-        color = 'secondary'
+        color = 'purple'
         break;
       case 'DELETE':
-        color = 'error'
+        color = 'destructive'
         break;
       default:
-        color = 'primary'
+        color = 'default'
         break;
     }
     return color;
@@ -59,25 +59,22 @@ const Sidebar = () => {
 
   return (
     <div className="w-1/6 p-5 flex flex-col justify-evenly items-center rounded-r-xl bg-black/50 border-black/90 border-r h-screen left-0">
-      <div className="flex items-center gap-5">
         <UserAvatar/>
         <p className="text-[#F3676C] font-mono text text-3xl font-bold">HTTPro</p>
-      </div>
-      <Button variant='secondary' onClick={addNewRequest}>Save request</Button>
+      <Button variant='secondary' onClick={() => addNewRequest()}>Save request</Button>
       <div className='flex flex-col gap-3'>
-      {requests.map((request: any, index: number) => (
-        <div key={index} className="flex items-center gap-5">
-          <Button
-            variant='secondary'
-            color={getColorByMethod(request.method)}
-            onClick={() => updateInfo(request)}
-          >
-            <p>{request.method}</p>
-            <FaTimes onClick={() => deleteRequest(index)} style={{ cursor: 'pointer' }} />
-          </Button>
-        </div>
-      ))}
-    </div>
+        {requests.map((request: any, index: number) => (
+          <div key={index} className="flex items-center gap-5">
+            <Button
+              variant={getColorByMethod(request.method)}
+              onClick={() => updateInfo(request)}
+            >
+              <p>{request.method}</p>
+              <FaTimes onClick={() => deleteRequest(index)} style={{ cursor: 'pointer' }} />
+            </Button>
+          </div>
+        ))}
+      </div>
       <Button>Use AI</Button>
     </div>
   )

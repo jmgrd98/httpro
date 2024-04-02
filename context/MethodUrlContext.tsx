@@ -44,7 +44,7 @@ export const MethodUrlProvider: any = ({ children }: any) => {
     const [response, setResponse] = useState<any>();
     const [message, setMessage] = useState<any>();
     const [tokens, setTokens] = useState<{ name: string; value: string }[]>([]);
-    const [aiRequest, setAiRequest] = useState<string>('');
+    const [aiRequest, setAiRequest] = useState<any>();
 
     const updateAiRequest = (newAiRequest: string) => {
         setAiRequest(newAiRequest);

@@ -19,9 +19,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <MethodUrlProvider>
-        <html lang='en'>
-          <body>{children}</body>
-        </html>
+      <html lang='en'>
+        <body>{children}</body>
+      </html>
       </MethodUrlProvider>
   </ClerkProvider>
   );
