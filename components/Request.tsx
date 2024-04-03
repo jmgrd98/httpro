@@ -15,96 +15,95 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
 import { Input } from './ui/input';
 
 function Request() {
-    const { 
-        // params,
-        headers,
-        tokens,
-        updateParams,
-        updateHeaders,
-        body,
-        updateBody,
-        updateTokens,
-        aiRequest } = useMethodUrlContext();
-  
-    const [copied, setCopied] = useState(false);
-    const [request, setRequest] = useState('Params');
-    const [showToken, setShowToken] = useState(true);
-    const [json, setJson] = useState(null);
-    const [params, setParams] = useState([{ name: '', value: '' }]);
+  const { 
+      // params,
+      headers,
+      tokens,
+      updateParams,
+      updateHeaders,
+      body,
+      updateBody,
+      updateTokens,
+      aiRequest } = useMethodUrlContext();
+
+  const [copied, setCopied] = useState(false);
+  const [request, setRequest] = useState('Params');
+  const [showToken, setShowToken] = useState(true);
+  const [json, setJson] = useState(null);
+  const [params, setParams] = useState([{ name: '', value: '' }]);
 
 
-    // useEffect(() => {
-    //     if (aiRequest) {
-    //         const startIndex = aiRequest.content.indexOf('{');
-    //         const endIndex = aiRequest.content.lastIndexOf('}') + 1;
-    //         const extractedJson = aiRequest.content.substring(startIndex, endIndex);
+  // useEffect(() => {
+  //     if (aiRequest) {
+  //         const startIndex = aiRequest.content.indexOf('{');
+  //         const endIndex = aiRequest.content.lastIndexOf('}') + 1;
+  //         const extractedJson = aiRequest.content.substring(startIndex, endIndex);
 
-    //         try {
-    //             const parsedJson = JSON.parse(extractedJson);
-    //             setJson(JSON.stringify(parsedJson, null, 2));
-    //         } catch (error) {
-    //             console.error('Error parsing JSON:', error);
-    //         }
-    //     }
-    // }, [aiRequest]);
-    const handleCopy = () => {
-        navigator.clipboard.writeText(body);
-        setCopied(true);
-        setTimeout(() => {
-            setCopied(false);
-        }, 2000);
-    };
+  //         try {
+  //             const parsedJson = JSON.parse(extractedJson);
+  //             setJson(JSON.stringify(parsedJson, null, 2));
+  //         } catch (error) {
+  //             console.error('Error parsing JSON:', error);
+  //         }
+  //     }
+  // }, [aiRequest]);
+  const handleCopy = () => {
+      navigator.clipboard.writeText(body);
+      setCopied(true);
+      setTimeout(() => {
+          setCopied(false);
+      }, 2000);
+  };
 
-const handleFieldChange = (index: number, field: string, value: string) => {
-      if ((field == 'header' || field == 'auth' || field == 'param') && value === '') {
-        console.error('Header name must be a non-empty string');
-        return;
+  const handleFieldChange = (index: number, field: string, value: string) => {
+        if ((field == 'header' || field == 'auth' || field == 'param') && value === '') {
+          console.error('Header name must be a non-empty string');
+          return;
+      }
+
+      if (request === 'Params') {
+          const updatedParams = [...params];
+          updatedParams[index][field] = value;
+          updateParams(updatedParams);
+      } else if (request === 'Headers') {
+          const updatedHeaders = [...headers];
+          updatedHeaders[index][field] = value;
+          updateHeaders(updatedHeaders);
+      } else if (request === 'Auth') {
+          const updatedTokens = [...tokens];
+          updatedTokens[index][field] = value;
+          updateTokens(updatedTokens);
+      }
+  };
+
+  const addField = () => {
+    if (request === 'Params') {
+        const updatedParams = [...params, { name: '', value: '' }];
+        setParams(updatedParams);
+    } else if (request === 'Headers') {
+        const updatedHeaders = [...headers, { name: '', value: '' }];
+        updateHeaders(updatedHeaders);
+    } else if (request === 'Auth') {
+        const updatedTokens = [...tokens, { name: '', value: '' }];
+        updateTokens(updatedTokens);
     }
+  };
 
+  const deleteField = (index: number) => {
     if (request === 'Params') {
         const updatedParams = [...params];
-        updatedParams[index][field] = value;
-        updateParams(updatedParams);
+        updatedParams.splice(index, 1);
+        setParams(updatedParams);
     } else if (request === 'Headers') {
         const updatedHeaders = [...headers];
-        updatedHeaders[index][field] = value;
+        updatedHeaders.splice(index, 1);
         updateHeaders(updatedHeaders);
     } else if (request === 'Auth') {
         const updatedTokens = [...tokens];
-        updatedTokens[index][field] = value;
+        updatedTokens.splice(index, 1);
         updateTokens(updatedTokens);
     }
-};
-
-const addField = () => {
-  if (request === 'Params') {
-      const updatedParams = [...params, { name: '', value: '' }];
-      setParams(updatedParams); // Update params state
-  } else if (request === 'Headers') {
-      const updatedHeaders = [...headers, { name: '', value: '' }];
-      updateHeaders(updatedHeaders); // Update headers state using updateHeaders function
-  } else if (request === 'Auth') {
-      const updatedTokens = [...tokens, { name: '', value: '' }];
-      updateTokens(updatedTokens); // Update tokens state using updateTokens function
-  }
-};
-
-const deleteField = (index: number) => {
-  if (request === 'Params') {
-      const updatedParams = [...params];
-      updatedParams.splice(index, 1);
-      setParams(updatedParams); // Update params state
-  } else if (request === 'Headers') {
-      const updatedHeaders = [...headers];
-      updatedHeaders.splice(index, 1);
-      updateHeaders(updatedHeaders); // Update headers state using updateHeaders function
-  } else if (request === 'Auth') {
-      const updatedTokens = [...tokens];
-      updatedTokens.splice(index, 1);
-      updateTokens(updatedTokens); // Update tokens state using updateTokens function
-  }
-};
-
+  };
   
     const handleBodyChange = (value: any) => {
         updateBody(value);
@@ -161,11 +160,10 @@ const deleteField = (index: number) => {
                     <TabsContent value="body">
                     <div className='mt-5  p-3 rounded-xl h-[400px] max-h-[400px] relative'>
                       <CodeMirror
-                          value={aiRequest ? json : body}
+                          value={body}
                           theme={tokyoNight}
                           placeholder="Write your JSON here"
-                          onChange={(e: any) => handleBodyChange(e.target.value)}
-                          // padding={15}
+                          onChange={(e: any) => handleBodyChange(e)}
                           style={{
                               fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
                           }}

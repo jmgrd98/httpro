@@ -60,10 +60,10 @@ const Header = () => {
   return (
     <div className='w-full h-[100px] top-0 bg-black/20 p-3 flex items-center gap-5 justify-between'>
       <Select value={method} onValueChange={(e) => handleMethodChange(e)}>
-        <SelectTrigger className="w-[180px] bg-transparent text-white border-white/50">
+        <SelectTrigger className="w-[180px] bg-slate-900 text-white border-white/50">
           <SelectValue placeholder="GET" />
         </SelectTrigger>
-        <SelectContent className="bg-transparent text-white border-white/50">
+        <SelectContent className="bg-slate-900 text-white border-white/50">
           <SelectGroup>
             <SelectItem value="GET">GET</SelectItem>
             <SelectItem value="POST">POST</SelectItem>

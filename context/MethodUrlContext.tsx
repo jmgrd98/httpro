@@ -38,7 +38,7 @@ export const MethodUrlProvider: any = ({ children }: any) => {
     const [method, setMethod] = useState<string>('GET');
     const [url, setUrl] = useState<string>('');
     const [params, setParams] = useState<{ name: string; value: string }[]>([]);
-    const [body, setBody] = useState<any>(null);
+    const [body, setBody] = useState<string>('');
     const [headers, setHeaders] = useState<{ name: string; value: string }[]>([]);
     const [data, setData] = useState<any[]>([]);
     const [response, setResponse] = useState<any>();
@@ -110,11 +110,11 @@ export const MethodUrlProvider: any = ({ children }: any) => {
                 }, {}),
                 data: parsedBody
             });
-
-            const flattenedResponse = flattenResponseData(response);
-            console.log('Response:', flattenedResponse);
-            setResponse(flattenedResponse);
-            setData(response.data.message ? response.data.message : response.data);
+            console.log(parsedBody)
+            // const flattenedResponse = flattenResponseData(response);
+            console.log('Response:', response);
+            setResponse(response);
+            
         } catch (error: any) {
             console.error('Error:', error);
             setResponse(error.response);
