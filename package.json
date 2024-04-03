@@ -15,6 +15,8 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@uiw/codemirror-theme-tokyo-night": "^4.21.25",
+    "@uiw/react-codemirror": "^4.21.25",
     "@uiw/react-textarea-code-editor": "^3.0.2",
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",

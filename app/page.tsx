@@ -2,6 +2,7 @@
 
 import Header from "@/components/Header";
 import Request from "@/components/Request";
+import Response from "@/components/Response";
 import Sidebar from "@/components/Sidebar";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
         
         <main className="flex items-center gap-10 h-full w-full p-5">
           <Request/>
+          <Response/>
         </main>
       </div>
     </div>

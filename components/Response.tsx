@@ -24,7 +24,7 @@ function Response() {
     if (status >= 200 && status < 300) {
       return 'success';
     } else if (status >= 400 && status < 600) {
-      return 'error';
+      return 'destructive';
     } else {
       return 'default';
     }
@@ -33,7 +33,7 @@ function Response() {
   return (
     <section className='border-2 border-gray-400 rounded-xl h-full p-5 w-1/2'>
       <div className='flex flex-col gap-3'>
-        <p className="text-xl font-bold">Response</p>
+        <p className="text-xl font-bold text-white/90">Response</p>
         {!response && (
           <div className="mt-[120px] flex flex-col items-center justify-center gap-5">
             <FaFileExport className="w-20 h-20 text-gray-200" />
@@ -44,7 +44,7 @@ function Response() {
           <Badge 
             variant={getColorByStatus(response.status)}
             className="w-[25%] font-bold"
-          >${response.status} ${response.statusText}</Badge>
+          >{response.status} {response.statusText}</Badge>
         }
       </div>
       {response && response.status >= 400 && (
