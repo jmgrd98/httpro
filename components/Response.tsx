@@ -50,11 +50,6 @@ const statusTextMap = {
 function Response() {
   const { response, message } = useMethodUrlContext();
 
-  useEffect(() => {
-      console.log('response', response);
-      console.log('message', message);
-  }, []);
-
   const checkResponseMethod = () => {
     if (response?.status >= 200 && response?.status < 300) {
       return 'success';
@@ -73,7 +68,7 @@ function Response() {
 
   const renderJson = (data) => {
     if (typeof data === 'string') {
-      return <span style={{ color: '#A9A9A9' }}>"{data}"</span>;
+      return <span style={{ color: '#A9A9A9' }}>&quot;{data}&quot;</span>;
     }
     if (typeof data === 'number' || typeof data === 'boolean') {
       return <span style={{ color: '#FF4500' }}>{data.toString()}</span>;
@@ -98,7 +93,7 @@ function Response() {
           <ul style={{ listStyleType: 'none', paddingLeft: '1.5rem' }}>
             {Object.keys(data).map((key, index) => (
               <li key={index}>
-                <span style={{ color: '#00BFFF' }}>"{key}"</span>: {renderJson(data[key])}
+                <span style={{ color: '#00BFFF' }}>&quot;{key}&quot;</span>: {renderJson(data[key])}
               </li>
             ))}
           </ul>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaCopy, FaCheck, FaTrash, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { CiCirclePlus } from "react-icons/ci";
 import { useMethodUrlContext } from '../context/MethodUrlContext';
@@ -8,7 +8,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { tokyoNight } from '@uiw/codemirror-theme-tokyo-night';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { IoMdKey } from "react-icons/io";
+// import { IoMdKey } from "react-icons/io";
 import { Button } from './ui/button';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
 import { Input } from './ui/input';
