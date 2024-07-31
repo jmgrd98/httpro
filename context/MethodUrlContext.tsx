@@ -74,30 +74,14 @@ export const MethodUrlProvider: any = ({ children }: any) => {
         setHeaders(newHeaders);
     };
 
-    const flattenResponseData = (response: any) => {
-        const flattenObject = (obj: any, parentKey = '') => {
-            return Object.keys(obj).reduce((acc: any, key) => {
-                const prefixedKey = parentKey ? `${parentKey}.${key}` : key;
-                if (typeof obj[key] === 'object' && obj[key] !== null && key === 'data') {
-                    Object.assign(acc, flattenObject(obj[key], prefixedKey));
-                } else {
-                    acc[prefixedKey] = obj[key];
-                }
-                return acc;
-            }, {});
-        };
-
-        return flattenObject(response);
-    };
-
     const handleSubmit = async () => {
         if (url === '') {
-            setMessage('Enter a URL')
+            setMessage('Enter a URL');
             return;
         }
         try {
             const parsedBody = body ? JSON.parse(body) : null;
-            const response: any = await axios.create({
+            const response: any = await axios({
                 method: method,
                 url: url,
                 params: params.reduce((acc: any, param: any) => {
@@ -110,11 +94,7 @@ export const MethodUrlProvider: any = ({ children }: any) => {
                 }, {}),
                 data: parsedBody
             });
-            console.log(parsedBody)
-            // const flattenedResponse = flattenResponseData(response);
-            console.log('Response:', response);
             setResponse(response);
-            
         } catch (error: any) {
             console.error('Error:', error);
             setResponse(error.response);

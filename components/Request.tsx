@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react';
 import { FaCopy, FaCheck, FaTrash, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { CiCirclePlus } from "react-icons/ci";
 import { useMethodUrlContext } from '../context/MethodUrlContext';
-import CodeEditor from '@uiw/react-textarea-code-editor';
-import CodeMirror from '@uiw/react-codemirror'
+import CodeMirror from '@uiw/react-codemirror';
 import { tokyoNight } from '@uiw/codemirror-theme-tokyo-night';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,7 +15,6 @@ import { Input } from './ui/input';
 
 function Request() {
   const { 
-      // params,
       headers,
       tokens,
       updateParams,
@@ -24,7 +22,8 @@ function Request() {
       body,
       updateBody,
       updateTokens,
-      aiRequest } = useMethodUrlContext();
+      aiRequest 
+  } = useMethodUrlContext();
 
   const [copied, setCopied] = useState(false);
   const [request, setRequest] = useState('Params');
@@ -32,21 +31,6 @@ function Request() {
   const [json, setJson] = useState(null);
   const [params, setParams] = useState([{ name: '', value: '' }]);
 
-
-  // useEffect(() => {
-  //     if (aiRequest) {
-  //         const startIndex = aiRequest.content.indexOf('{');
-  //         const endIndex = aiRequest.content.lastIndexOf('}') + 1;
-  //         const extractedJson = aiRequest.content.substring(startIndex, endIndex);
-
-  //         try {
-  //             const parsedJson = JSON.parse(extractedJson);
-  //             setJson(JSON.stringify(parsedJson, null, 2));
-  //         } catch (error) {
-  //             console.error('Error parsing JSON:', error);
-  //         }
-  //     }
-  // }, [aiRequest]);
   const handleCopy = () => {
       navigator.clipboard.writeText(body);
       setCopied(true);
@@ -56,8 +40,8 @@ function Request() {
   };
 
   const handleFieldChange = (index: number, field: string, value: string) => {
-        if ((field == 'header' || field == 'auth' || field == 'param') && value === '') {
-          console.error('Header name must be a non-empty string');
+      if ((field == 'header' || field == 'auth' || field == 'param') && value === '') {
+          console.error('Field name must be a non-empty string');
           return;
       }
 
@@ -77,121 +61,153 @@ function Request() {
   };
 
   const addField = () => {
-    if (request === 'Params') {
-        const updatedParams = [...params, { name: '', value: '' }];
-        setParams(updatedParams);
-    } else if (request === 'Headers') {
-        const updatedHeaders = [...headers, { name: '', value: '' }];
-        updateHeaders(updatedHeaders);
-    } else if (request === 'Auth') {
-        const updatedTokens = [...tokens, { name: '', value: '' }];
-        updateTokens(updatedTokens);
-    }
+      if (request === 'Params') {
+          const updatedParams = [...params, { name: '', value: '' }];
+          setParams(updatedParams);
+      } else if (request === 'Headers') {
+          const updatedHeaders = [...headers, { name: '', value: '' }];
+          updateHeaders(updatedHeaders);
+      } else if (request === 'Auth') {
+          const updatedTokens = [...tokens, { name: '', value: '' }];
+          updateTokens(updatedTokens);
+      }
   };
 
   const deleteField = (index: number) => {
-    if (request === 'Params') {
-        const updatedParams = [...params];
-        updatedParams.splice(index, 1);
-        setParams(updatedParams);
-    } else if (request === 'Headers') {
-        const updatedHeaders = [...headers];
-        updatedHeaders.splice(index, 1);
-        updateHeaders(updatedHeaders);
-    } else if (request === 'Auth') {
-        const updatedTokens = [...tokens];
-        updatedTokens.splice(index, 1);
-        updateTokens(updatedTokens);
-    }
+      if (request === 'Params') {
+          const updatedParams = [...params];
+          updatedParams.splice(index, 1);
+          setParams(updatedParams);
+      } else if (request === 'Headers') {
+          const updatedHeaders = [...headers];
+          updatedHeaders.splice(index, 1);
+          updateHeaders(updatedHeaders);
+      } else if (request === 'Auth') {
+          const updatedTokens = [...tokens];
+          updatedTokens.splice(index, 1);
+          updateTokens(updatedTokens);
+      }
   };
   
-    const handleBodyChange = (value: any) => {
-        updateBody(value);
-    };
+  const handleBodyChange = (value: any) => {
+      updateBody(value);
+  };
   
-    return (
+  return (
       <>
         <section className='border-2 border-gray-400 rounded-xl h-full p-5 w-1/2'>
             <p className='mb-2 text-xl font-bold text-white/90'>Request</p>
-            <div className='min-w-[120px] max-w-[120px]'>
-                
-            </div>
-  
             <Tabs defaultValue="params" className="w-full mb-2">
-                    <TabsList className='bg-transparent border border-gray-400'>
-                      <TabsTrigger value="params">Params</TabsTrigger>
-                      <TabsTrigger value="headers">Headers</TabsTrigger>
-                      <TabsTrigger value="auth">Auth</TabsTrigger>
-                      <TabsTrigger value="body">Body</TabsTrigger>
-                    </TabsList>
-                    <TabsContent className='bg-black/50 p-5 text-white/90 rounded h-full' value="params">
-                      <Button variant={'purple'} onClick={addField} className='flex gap-3 mb-3'>
+                <TabsList className='bg-transparent border border-gray-400'>
+                    <TabsTrigger value="params">Params</TabsTrigger>
+                    <TabsTrigger value="headers">Headers</TabsTrigger>
+                    <TabsTrigger value="auth">Auth</TabsTrigger>
+                    <TabsTrigger value="body">Body</TabsTrigger>
+                </TabsList>
+                <TabsContent className='bg-black/50 p-5 text-white/90 rounded h-full' value="params">
+                    <Button variant={'purple'} onClick={addField} className='flex gap-3 mb-3'>
                         <p>Add</p>
                         <CiCirclePlus style={{ width: 25, height: 25, cursor: 'pointer'}}/>
-                      </Button>
-                      {params.map((field, index) => (
+                    </Button>
+                    {params.map((field, index) => (
                         <div key={index} className='flex items-center gap-3 mb-2'>
-                          <Input
-                              className='p-2 rounded'
-                              type='text'
-                              placeholder='name'
-                              value={field.name}
-                              onChange={(e) => handleFieldChange(index, 'name', e.target.value)}
-                          />
-                          <Input
-                              className='p-2 rounded'
-                              type='text'
-                              placeholder='value'
-                              value={field.value}
-                              onChange={(e) => handleFieldChange(index, 'value', e.target.value)}
-                          />
-                          <FaTrash 
-                            onClick={() => deleteField(index)} 
-                            className="text-red-500 w-10 h-10 cursor-pointer hover:text-red-500/50"
-                          />
-                      </div>
-                      ))}
-                    
-                    
-                        
-                    </TabsContent>
-                    <TabsContent value="headers">Change your password here.</TabsContent>
-                    <TabsContent value="auth">Change your password here.</TabsContent>
-                    <TabsContent value="body">
-                    <div className='mt-5  p-3 rounded-xl h-[400px] max-h-[400px] relative'>
-                      <CodeMirror
-                          value={body}
-                          theme={tokyoNight}
-                          placeholder="Write your JSON here"
-                          onChange={(e: any) => handleBodyChange(e)}
-                          style={{
-                              fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-                          }}
-                      />
-                      <button onClick={handleCopy} className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-2">
-                          {copied ? <FaCheck /> : <FaCopy />}
-                      </button>
-                  </div>
-                    </TabsContent>
-                  </Tabs>
-
-            
+                            <Input
+                                type="text"
+                                placeholder="Name"
+                                value={field.name}
+                                onChange={(e) => handleFieldChange(index, 'name', e.target.value)}
+                                className='bg-transparent text-white'
+                            />
+                            <Input
+                                type="text"
+                                placeholder="Value"
+                                value={field.value}
+                                onChange={(e) => handleFieldChange(index, 'value', e.target.value)}
+                                className='bg-transparent text-white'
+                            />
+                            <FaTrash onClick={() => deleteField(index)} style={{ cursor: 'pointer', color: 'red' }}/>
+                        </div>
+                    ))}
+                </TabsContent>
+                <TabsContent className='bg-black/50 p-5 text-white/90 rounded h-full' value="headers">
+                    <Button variant={'purple'} onClick={addField} className='flex gap-3 mb-3'>
+                        <p>Add</p>
+                        <CiCirclePlus style={{ width: 25, height: 25, cursor: 'pointer'}}/>
+                    </Button>
+                    {headers.map((header, index) => (
+                        <div key={index} className='flex items-center gap-3 mb-2'>
+                            <Input
+                                type="text"
+                                placeholder="Name"
+                                value={header.name}
+                                onChange={(e) => handleFieldChange(index, 'name', e.target.value)}
+                                className='bg-transparent text-white'
+                            />
+                            <Input
+                                type="text"
+                                placeholder="Value"
+                                value={header.value}
+                                onChange={(e) => handleFieldChange(index, 'value', e.target.value)}
+                                className='bg-transparent text-white'
+                            />
+                            <FaTrash onClick={() => deleteField(index)} style={{ cursor: 'pointer', color: 'red' }}/>
+                        </div>
+                    ))}
+                </TabsContent>
+                <TabsContent className='bg-black/50 p-5 text-white/90 rounded h-full' value="auth">
+                    <Button variant={'purple'} onClick={addField} className='flex gap-3 mb-3'>
+                        <p>Add</p>
+                        <CiCirclePlus style={{ width: 25, height: 25, cursor: 'pointer'}}/>
+                    </Button>
+                    {tokens.map((token, index) => (
+                        <div key={index} className='flex items-center gap-3 mb-2'>
+                            <Input
+                                type="text"
+                                placeholder="Name"
+                                value={token.name}
+                                onChange={(e) => handleFieldChange(index, 'name', e.target.value)}
+                                className='bg-transparent text-white'
+                            />
+                            <Input
+                                type={showToken ? 'text' : 'password'}
+                                placeholder="Value"
+                                value={token.value}
+                                onChange={(e) => handleFieldChange(index, 'value', e.target.value)}
+                                className='bg-transparent text-white'
+                            />
+                            {showToken ? (
+                                <FaEye onClick={() => setShowToken(false)} style={{ cursor: 'pointer' }}/>
+                            ) : (
+                                <FaEyeSlash onClick={() => setShowToken(true)} style={{ cursor: 'pointer' }}/>
+                            )}
+                            <FaTrash onClick={() => deleteField(index)} style={{ cursor: 'pointer', color: 'red' }}/>
+                        </div>
+                    ))}
+                </TabsContent>
+                <TabsContent className='bg-black/50 p-5 text-white/90 rounded h-full' value="body">
+                    <div className='flex flex-col mb-5'>
+                        <div className='flex justify-between'>
+                            <label htmlFor="bodyEditor" className='text-lg'>Body</label>
+                            <button onClick={handleCopy} className='text-gray-500 hover:text-white transition-all'>
+                                {copied ? <FaCheck /> : <FaCopy />}
+                            </button>
+                        </div>
+                        <CodeMirror
+                            id="bodyEditor"
+                            value={body}
+                            height="300px"
+                            extensions={[]}
+                            onChange={handleBodyChange}
+                            theme={tokyoNight}
+                            className='border-2 border-gray-400 rounded'
+                        />
+                    </div>
+                </TabsContent>
+            </Tabs>
+            <ToastContainer />
         </section>
-
-        <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="dark"
-            />
       </>
-    );
+  )
 }
 
 export default Request;

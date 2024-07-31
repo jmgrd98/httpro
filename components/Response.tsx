@@ -1,69 +1,94 @@
 'use client'
 
-import { useState } from "react";
-import { FaCopy, FaCheck } from 'react-icons/fa';
-import { useMethodUrlContext } from "../context/MethodUrlContext";
-import { FaFileExport } from "react-icons/fa";
-import { Badge } from "./ui/badge";
+import { useEffect } from 'react';
+import { useMethodUrlContext } from '../context/MethodUrlContext';
+import { Badge } from './ui/badge';
+
+const statusTextMap = {
+  100: "Continue",
+  101: "Switching Protocols",
+  200: "OK",
+  201: "Created",
+  202: "Accepted",
+  203: "Non-Authoritative Information",
+  204: "No Content",
+  205: "Reset Content",
+  206: "Partial Content",
+  300: "Multiple Choices",
+  301: "Moved Permanently",
+  302: "Found",
+  303: "See Other",
+  304: "Not Modified",
+  305: "Use Proxy",
+  307: "Temporary Redirect",
+  400: "Bad Request",
+  401: "Unauthorized",
+  402: "Payment Required",
+  403: "Forbidden",
+  404: "Not Found",
+  405: "Method Not Allowed",
+  406: "Not Acceptable",
+  407: "Proxy Authentication Required",
+  408: "Request Timeout",
+  409: "Conflict",
+  410: "Gone",
+  411: "Length Required",
+  412: "Precondition Failed",
+  413: "Payload Too Large",
+  414: "URI Too Long",
+  415: "Unsupported Media Type",
+  416: "Range Not Satisfiable",
+  417: "Expectation Failed",
+  500: "Internal Server Error",
+  501: "Not Implemented",
+  502: "Bad Gateway",
+  503: "Service Unavailable",
+  504: "Gateway Timeout",
+  505: "HTTP Version Not Supported",
+};
 
 function Response() {
-  const { method, message, response } = useMethodUrlContext();
-  const [copied, setCopied] = useState(false);
+  const { response, message } = useMethodUrlContext();
 
-  const handleCopy = () => {
-    if (response) {
-      navigator.clipboard.writeText(JSON.stringify(response, null, 2));
-      setCopied(true);
-      setTimeout(() => {
-        setCopied(false);
-      }, 2000);
-    }
-  };
+  useEffect(() => {
+      console.log('response', response);
+      console.log('message', message);
+  }, []);
 
-  const getColorByStatus = (status: number) => {
-    if (status >= 200 && status < 300) {
+  const checkResponseMethod = () => {
+    if (response?.status >= 200 && response?.status < 300) {
       return 'success';
-    } else if (status >= 400 && status < 600) {
+    } else if (response?.status >= 300 && response?.status < 400) {
+      return 'alert';
+    } else if (response?.status >= 400 && response?.status < 500) {
       return 'destructive';
     } else {
-      return 'default';
+      return 'error';
     }
-  };
+  }
 
+  const getStatusText = (statusCode) => {
+    return statusTextMap[statusCode] || 'Unknown Status';
+  }
+  
   return (
-    <section className='border-2 border-gray-400 rounded-xl h-full p-5 w-1/2'>
-      <div className='flex flex-col gap-3'>
-        <p className="text-xl font-bold text-white/90">Response</p>
-        {!response && (
-          <div className="mt-[120px] flex flex-col items-center justify-center gap-5">
-            <FaFileExport className="w-20 h-20 text-gray-200" />
-            <p className="text-xl  text-gray-400">Make a request</p>
-          </div>
-        )}
-        {response && 
+      <section className='border-2 border-gray-400 rounded-xl h-full p-5 w-1/2'>
+          <p className='mb-2 text-xl font-bold text-white/90'>Response</p>
           <Badge 
-            variant={getColorByStatus(response.status)}
-            className="w-[25%] font-bold"
-          >{response.status} {response.statusText}</Badge>
-        }
-      </div>
-      {response && response.status >= 400 && (
-        <div className='mt-5 bg-gray-300 p-3 rounded-xl overflow-y-scroll max-h-[400px] relative'>
-          <pre>{message}</pre>
-          <button onClick={handleCopy} className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-2">
-            {copied ? <FaCheck /> : <FaCopy />}
-          </button>
-        </div>
-      )}
-      {(response) && (
-        <div className='mt-5 bg-gray-300 p-3 rounded-xl overflow-y-scroll max-h-[400px] max-w-[500px] relative'>
-          <pre>{JSON.stringify(response, null, 2)}</pre>
-          <button onClick={handleCopy} className="absolute top-2 right-2 bg-blue-500 text-white rounded-full p-2">
-            {copied ? <FaCheck /> : <FaCopy />}
-          </button>
-        </div>
-      )}
-    </section>
+            variant={checkResponseMethod()}
+            className={'border-none shadow-lg'}
+          >
+            {response?.status} {getStatusText(response?.status)}
+          </Badge>
+          <div className='bg-black/50 p-5 text-white/90 rounded h-full'>
+              <pre>{JSON.stringify(response?.data, null, 2)}</pre>
+              <div className='mt-3'>
+                  <p><strong>Status:</strong> {response?.status}</p>
+                  <p><strong>Status Text:</strong> {getStatusText(response?.status)}</p>
+                  <p><strong>Message:</strong> {message}</p>
+              </div>
+          </div>
+      </section>
   );
 }
 

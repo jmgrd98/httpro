@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "./ui/button"
-import UserAvatar from "./UserAvatar"
+import { UserButton } from '@clerk/clerk-react'
 import { useMethodUrlContext } from "@/context/MethodUrlContext"
 import { FaTimes } from 'react-icons/fa'
 import { CiCirclePlus } from 'react-icons/ci'
@@ -18,7 +18,6 @@ const Sidebar = () => {
   }
 
   const updateInfo = (request: any) => {
-    // console.log(requ)
     updateMethod(request.method);
     updateUrl(request.url);
     updateBody(request.body);
@@ -63,10 +62,10 @@ const Sidebar = () => {
     <div className="w-1/6 p-5 flex flex-col justify-between gap-5 items-center rounded-r-xl bg-black/50 border-black/90 border-r h-screen left-0">
       <div>
         <div className="w-full mb-5">
-          <UserAvatar/>
+          <UserButton userProfileUrl="/profile"/>
         </div>
         <div className="flex flex-col gap-2 mb-10">
-          <p className="text-[#F3676C] font-mono text text-3xl font-bold">HTTPro</p>
+          <p className="text-green-500 shadow-md  p-0 font-mono text text-3xl font-bold">HTTPro</p>
           <Button className="flex gap-2" variant='secondary' onClick={() => addNewRequest()}>
             <p>Save request</p>
             <CiCirclePlus style={{ width: 25, height: 25, cursor: 'pointer'}}/>
@@ -89,9 +88,9 @@ const Sidebar = () => {
         ))}
       </div>
 
-      <div className="">
+      {/* <div className="">
         <Button>Use AI</Button>
-      </div>
+      </div> */}
     </div>
   )
 }

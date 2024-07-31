@@ -73,8 +73,12 @@ const Header = () => {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <Input value={url} onChange={(e) => handleUrlChange(e.target.value)} type="text" placeholder="http://localhost:3000" className="border-white/50 text-white" />
-      <Button onClick={validateAndSubmit} >Enviar</Button>
+      <Input
+        value={url} onChange={(e) => handleUrlChange(e.target.value)}
+        type="text"
+        placeholder="https://example.com:3000"
+        className="shadow-md shadow-slate-500 text-white border-none" />
+      <Button className='hover:bg-green-500/50' onClick={validateAndSubmit} >Enviar</Button>
     </div>
   )
 }
