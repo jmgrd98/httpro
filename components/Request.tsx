@@ -45,8 +45,6 @@ function Request() {
   const [showToken, setShowToken] = useState(true);
   const [json, setJson] = useState(null);
   const [params, setParams] = useState<Param[]>([]);
-//   const [headers, setHeaders] = useState<Header[]>([]);
-//   const [tokens, setTokens] = useState<Token[]>([]);
 
   const handleCopy = () => {
       navigator.clipboard.writeText(body);
@@ -56,14 +54,14 @@ function Request() {
       }, 2000);
   };
 
-  const handleFieldChange = (index: number, field: string, value: string) => {
-      if ((field == 'header' || field == 'auth' || field == 'param') && value === '') {
+  const handleFieldChange = (index: number, field: 'name' | 'value', value: string) => {
+      if ((field === 'header' || field === 'auth' || field === 'param') && value === '') {
           console.error('Field name must be a non-empty string');
           return;
       }
 
       if (request === 'Params') {
-          const updatedParams: any = [...params];
+          const updatedParams = [...params];
           updatedParams[index][field] = value;
           updateParams(updatedParams);
       } else if (request === 'Headers') {
