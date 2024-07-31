@@ -57,7 +57,7 @@ function Response() {
     } else if (response?.status >= 400 && response?.status < 500) {
       return 'destructive';
     } else {
-      return 'error';
+      return 'default';
     }
   }
 
