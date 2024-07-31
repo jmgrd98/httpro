@@ -62,7 +62,7 @@ function Response() {
     }
   }
 
-  const getStatusText = (statusCode: number) => {
+  const getStatusText = (statusCode: any) => {
     return statusTextMap[statusCode] || 'Unknown Status';
   }
 
