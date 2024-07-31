@@ -1,10 +1,9 @@
 'use client'
 
-import { useEffect } from 'react';
 import { useMethodUrlContext } from '../context/MethodUrlContext';
 import { Badge } from './ui/badge';
 
-const statusTextMap = {
+const statusTextMap: any = {
   100: "Continue",
   101: "Switching Protocols",
   200: "OK",
