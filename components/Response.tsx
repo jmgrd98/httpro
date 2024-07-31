@@ -70,6 +70,44 @@ function Response() {
   const getStatusText = (statusCode) => {
     return statusTextMap[statusCode] || 'Unknown Status';
   }
+
+  const renderJson = (data) => {
+    if (typeof data === 'string') {
+      return <span style={{ color: '#A9A9A9' }}>"{data}"</span>;
+    }
+    if (typeof data === 'number' || typeof data === 'boolean') {
+      return <span style={{ color: '#FF4500' }}>{data.toString()}</span>;
+    }
+    if (Array.isArray(data)) {
+      return (
+        <span>
+          [
+          <ul style={{ listStyleType: 'none', paddingLeft: '1.5rem' }}>
+            {data.map((item, index) => (
+              <li key={index}>{renderJson(item)}</li>
+            ))}
+          </ul>
+          ]
+        </span>
+      );
+    }
+    if (typeof data === 'object' && data !== null) {
+      return (
+        <span>
+          {'{'}
+          <ul style={{ listStyleType: 'none', paddingLeft: '1.5rem' }}>
+            {Object.keys(data).map((key, index) => (
+              <li key={index}>
+                <span style={{ color: '#00BFFF' }}>"{key}"</span>: {renderJson(data[key])}
+              </li>
+            ))}
+          </ul>
+          {'}'}
+        </span>
+      );
+    }
+    return null;
+  }
   
   return (
       <section className='border-2 border-gray-400 rounded-xl h-full p-5 w-1/2'>
@@ -81,7 +119,7 @@ function Response() {
             {response?.status} {getStatusText(response?.status)}
           </Badge>
           <div className='bg-black/50 p-5 text-white/90 rounded h-full'>
-              <pre>{JSON.stringify(response?.data, null, 2)}</pre>
+              <pre>{renderJson(response?.data)}</pre>
               <div className='mt-3'>
                   <p><strong>Status:</strong> {response?.status}</p>
                   <p><strong>Status Text:</strong> {getStatusText(response?.status)}</p>

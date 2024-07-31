@@ -25,11 +25,28 @@ function Request() {
       aiRequest 
   } = useMethodUrlContext();
 
+  type Param = {
+    name: string;
+    value: string;
+  };
+  
+  type Header = {
+    name: string;
+    value: string;
+  };
+  
+  type Token = {
+    name: string;
+    value: string;
+  };  
+
   const [copied, setCopied] = useState(false);
   const [request, setRequest] = useState('Params');
   const [showToken, setShowToken] = useState(true);
   const [json, setJson] = useState(null);
-  const [params, setParams] = useState([{ name: '', value: '' }]);
+  const [params, setParams] = useState<Param[]>([]);
+//   const [headers, setHeaders] = useState<Header[]>([]);
+//   const [tokens, setTokens] = useState<Token[]>([]);
 
   const handleCopy = () => {
       navigator.clipboard.writeText(body);
@@ -46,7 +63,7 @@ function Request() {
       }
 
       if (request === 'Params') {
-          const updatedParams = [...params];
+          const updatedParams: any = [...params];
           updatedParams[index][field] = value;
           updateParams(updatedParams);
       } else if (request === 'Headers') {
