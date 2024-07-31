@@ -30,7 +30,7 @@ const Sidebar = () => {
   };
 
   const getColorByMethod = (requestMethod: any, url?: string) => {
-    let color: any = ''
+    let color: "link" | "secondary" | "destructive" | "default" | "alert" | "success" | "outline" | "ghost" | "purple" | null | undefined = 'default';
     switch (requestMethod){
       case 'GET':
         color = 'default'
