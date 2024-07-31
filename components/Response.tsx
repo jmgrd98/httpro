@@ -65,7 +65,7 @@ function Response() {
     return statusTextMap[statusCode] || 'Unknown Status';
   }
 
-  const renderJson = (data) => {
+  const renderJson = (data: any) => {
     if (typeof data === 'string') {
       return <span style={{ color: '#A9A9A9' }}>&quot;{data}&quot;</span>;
     }
