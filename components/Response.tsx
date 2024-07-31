@@ -115,11 +115,6 @@ function Response() {
           </Badge>
           <div className='bg-black/50 p-5 text-white/90 rounded h-full'>
               <pre>{renderJson(response?.data)}</pre>
-              <div className='mt-3'>
-                  <p><strong>Status:</strong> {response?.status}</p>
-                  <p><strong>Status Text:</strong> {getStatusText(response?.status)}</p>
-                  <p><strong>Message:</strong> {message}</p>
-              </div>
           </div>
       </section>
   );

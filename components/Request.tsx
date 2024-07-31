@@ -55,7 +55,7 @@ function Request() {
   };
 
   const handleFieldChange = (index: number, field: 'name' | 'value', value: string) => {
-      if ((field === 'header' || field === 'auth' || field === 'param') && value === '') {
+      if (value === '') {
           console.error('Field name must be a non-empty string');
           return;
       }
