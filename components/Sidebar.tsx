@@ -30,7 +30,7 @@ const Sidebar = () => {
   };
 
   const getColorByMethod = (requestMethod: any, url?: string) => {
-    let color: string = ''
+    let color: any = ''
     switch (requestMethod){
       case 'GET':
         color = 'default'
