@@ -1,7 +1,10 @@
 import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
-  // ignoredRoutes: 'http://localhost:3000/favicon.ico/'
+  ignoredRoutes: [
+    '/favicon.ico/',
+    '/'
+  ]
 });
 
 export const config = {
