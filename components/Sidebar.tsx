@@ -61,9 +61,6 @@ const Sidebar = () => {
   return (
     <div className="w-1/6 p-5 flex flex-col justify-between gap-5 items-center rounded-r-xl bg-black/50 border-black/90 border-r h-screen left-0">
       <div>
-        <div className="w-full mb-5">
-          <UserButton userProfileUrl="/profile"/>
-        </div>
         <div className="flex flex-col gap-2 mb-10">
           <p className="text-green-500 shadow-md  p-0 font-mono text text-3xl font-bold">HTTPro</p>
           <Button className="flex gap-2" variant='secondary' onClick={() => addNewRequest()}>
@@ -91,6 +88,9 @@ const Sidebar = () => {
       {/* <div className="">
         <Button>Use AI</Button>
       </div> */}
+      <div className="w-full mb-5">
+          <UserButton userProfileUrl="/profile"/>
+        </div>
     </div>
   )
 }

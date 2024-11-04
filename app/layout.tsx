@@ -4,7 +4,6 @@ import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs';
 import { MethodUrlProvider } from '../context/MethodUrlContext';
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "HTTPro",
