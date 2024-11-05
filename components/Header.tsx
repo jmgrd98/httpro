@@ -56,14 +56,30 @@ const Header = () => {
     updateUrl(url);
   };
 
+  const getColorByMethod = (method: string) => {
+    switch (method) {
+      case "GET":
+        return "bg-[#0f4be0]";
+      case "POST":
+        return "bg-green-500";
+      case "PUT":
+        return "bg-yellow-500";
+      case "PATCH":
+        return "bg-purple-500";
+      case "DELETE":
+        return "bg-red-500";
+      default:
+        return "bg-gray-500";
+    }
+  };
 
   return (
-    <div className='w-full h-[100px] top-0 bg-black/20 p-3 flex items-center gap-5 justify-between'>
+    <div className='w-full h-[100px] top-0  p-3 flex items-center gap-5 justify-between'>
       <Select value={method} onValueChange={(e) => handleMethodChange(e)}>
-        <SelectTrigger className="w-[180px] bg-slate-900 text-white border-white/50">
+        <SelectTrigger className={`w-[180px] text-white border-none ${getColorByMethod(method)}`}>
           <SelectValue placeholder="GET" />
         </SelectTrigger>
-        <SelectContent className="bg-slate-900 text-white border-white/50">
+        <SelectContent className={`${getColorByMethod(method)} text-white`}>
           <SelectGroup>
             <SelectItem value="GET">GET</SelectItem>
             <SelectItem value="POST">POST</SelectItem>
@@ -77,8 +93,8 @@ const Header = () => {
         value={url} onChange={(e) => handleUrlChange(e.target.value)}
         type="text"
         placeholder="https://example.com:3000"
-        className="shadow-md shadow-slate-500 text-white border-none" />
-      <Button className='hover:bg-green-500/50' onClick={validateAndSubmit} >Enviar</Button>
+        className="shadow-md bg-white text-black" />
+      <Button variant={'primary'} onClick={validateAndSubmit} >Send</Button>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import { UserButton } from '@clerk/clerk-react'
 import { useMethodUrlContext } from "@/context/MethodUrlContext"
 import { FaTimes } from 'react-icons/fa'
 import { CiCirclePlus } from 'react-icons/ci'
+import Image from "next/image"
 
 const Sidebar = () => {
 
@@ -30,10 +31,10 @@ const Sidebar = () => {
   };
 
   const getColorByMethod = (requestMethod: any, url?: string) => {
-    let color: "link" | "secondary" | "destructive" | "default" | "alert" | "success" | "outline" | "ghost" | "purple" | null | undefined = 'default';
+    let color: "link" | "primary" | "secondary" | "destructive" | "default" | "alert" | "success" | "outline" | "ghost" | "purple" | null | undefined = 'default';
     switch (requestMethod){
       case 'GET':
-        color = 'default'
+        color = 'primary'
         break;
       case 'POST':
         color = 'success'
@@ -61,8 +62,8 @@ const Sidebar = () => {
   return (
     <div className="w-1/6 p-5 flex flex-col justify-between gap-5 items-center rounded-r-xl bg-black/50 border-black/90 border-r h-screen left-0">
       <div>
+        <Image src={'/HTTPro.svg'} width={60} height={60} alt="HTTPro" className='mb-10' />
         <div className="flex flex-col gap-2 mb-10">
-          <p className="text-green-500 shadow-md  p-0 font-mono text text-3xl font-bold">HTTPro</p>
           <Button className="flex gap-2" variant='secondary' onClick={() => addNewRequest()}>
             <p>Save request</p>
             <CiCirclePlus style={{ width: 25, height: 25, cursor: 'pointer'}}/>

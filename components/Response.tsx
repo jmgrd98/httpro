@@ -108,11 +108,11 @@ function Response() {
           <p className='mb-2 text-xl font-bold text-white/90'>Response</p>
           <Badge 
             variant={checkResponseMethod()}
-            className={'border-none shadow-lg'}
+            className={'border-none shadow-lg my-3 p-2'}
           >
             {response?.status} {getStatusText(response?.status)}
           </Badge>
-          <div className='bg-black/50 p-5 text-white/90 rounded h-full'>
+          <div className='bg-black/50 p-5 text-white/90 rounded h-[400px]'>
               <pre>{renderJson(response?.data)}</pre>
           </div>
       </section>

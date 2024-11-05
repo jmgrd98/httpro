@@ -120,7 +120,7 @@ function Request() {
                     <TabsTrigger value="body">Body</TabsTrigger>
                 </TabsList>
                 <TabsContent className='bg-black/50 p-5 text-white/90 rounded h-full' value="params">
-                    <Button variant={'purple'} onClick={addField} className='flex gap-3 mb-3'>
+                    <Button variant={'primary'} onClick={addField} className='flex gap-3 mb-3'>
                         <p>Add</p>
                         <CiCirclePlus style={{ width: 25, height: 25, cursor: 'pointer'}}/>
                     </Button>
