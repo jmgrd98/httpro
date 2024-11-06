@@ -18,27 +18,7 @@ import { useMethodUrlContext } from "@/context/MethodUrlContext"
 
 const Header = () => {
 
-  const { method, updateMethod, url, updateUrl, aiRequest, handleSubmit } = useMethodUrlContext();
-
-//   const { httpVerb, endpoint } = useMemo(() => {
-//     let method = '';
-//     let endpoint = '';
-
-//     if (aiRequest && aiRequest.content) {
-//         const lines = aiRequest.content.split('\n');
-//         if (lines.length > 0) {
-//             const firstLine = lines[0].trim();
-//             const [parsedMethod, parsedEndpoint] = firstLine.split(' ');
-//             if (parsedMethod && parsedEndpoint) {
-//                 method = parsedMethod;
-//                 endpoint = parsedEndpoint;
-//                 console.log(method)
-//             }
-//         }
-//     }
-//     console.log(method)
-//     return { httpVerb: method, endpoint };
-// }, [aiRequest]);
+  const { method, setMethod, url, setUrl, aiRequest, handleSubmit } = useMethodUrlContext();
 
   const validateAndSubmit = () => {
     if (url === '') {
@@ -49,11 +29,11 @@ const Header = () => {
   }
 
   const handleMethodChange = (method: string) => {
-    updateMethod(method);
+    setMethod(method);
   };
 
   const handleUrlChange = (url: string) => {
-    updateUrl(url);
+    setUrl(url);
   };
 
   const getColorByMethod = (method: string) => {

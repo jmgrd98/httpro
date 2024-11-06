@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react';
 import { useMethodUrlContext } from '../context/MethodUrlContext';
 import { Badge } from './ui/badge';
 
@@ -47,15 +48,26 @@ const statusTextMap: { [statusCode: number]: string } = {
 };
 
 function Response() {
-  const { response, message } = useMethodUrlContext();
+  const { 
+    response,
+    message,
+    responseBody,
+    setResponseBody, 
+    etStatusCode,
+    statusCode 
+  } = useMethodUrlContext();
+
+  useEffect(() => {
+    setResponseBody(responseBody);
+  }, [responseBody]);
 
   const checkResponseMethod = () => {
     if (response?.status >= 200 && response?.status < 300) {
-      return 'success';
+      return 'outlineSuccess';
     } else if (response?.status >= 300 && response?.status < 400) {
-      return 'alert';
+      return 'outlineAlert';
     } else if (response?.status >= 400 && response?.status < 500) {
-      return 'destructive';
+      return 'outlineDestructive';
     } else {
       return 'outline';
     }
@@ -104,16 +116,16 @@ function Response() {
   }
   
   return (
-      <section className='border-2 border-gray-400 rounded-xl h-full p-5 w-1/2'>
+      <section className='border-2 border-gray-400 rounded-xl h-full max-w-full p-5 w-1/2'>
           <p className='mb-2 text-xl font-bold text-white/90'>Response</p>
           <Badge 
             variant={checkResponseMethod()}
             className={'my-3 p-2'}
           >
-            {response?.status} {getStatusText(response?.status)}
+            {statusCode} {getStatusText(statusCode)}
           </Badge>
           <div className='bg-black/50 p-5 text-white/90 rounded h-[400px]'>
-              <pre>{renderJson(response?.data)}</pre>
+              <pre>{renderJson(responseBody)}</pre>
           </div>
       </section>
   );

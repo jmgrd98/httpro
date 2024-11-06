@@ -13,15 +13,21 @@ interface MethodUrlContextType {
     data: any[];
     response: any;
     message: any;
+    status: string | null;
+    statusCode: number | null;
+    responseBody: any;
     aiRequest: string;
-    updateMethod: (newMethod: string) => void;
-    updateUrl: (newUrl: string) => void;
-    updateParams: (newParams: { name: string; value: string }[]) => void;
-    updateBody: (newBody: any) => void;
-    updateHeaders: (newHeaders: { name: string; value: string }[]) => void;
-    updateTokens: (newTokens: { name: string; value: string }[]) => void;
+    setMethod: React.Dispatch<React.SetStateAction<string>>;
+    setUrl: React.Dispatch<React.SetStateAction<string>>;
+    setParams: React.Dispatch<React.SetStateAction<{ name: string; value: string }[]>>;
+    setBody: React.Dispatch<React.SetStateAction<any>>;
+    setHeaders: React.Dispatch<React.SetStateAction<{ name: string; value: string }[]>>;
+    setStatusCode: React.Dispatch<React.SetStateAction<number | null>>;
+    setResponseBody: React.Dispatch<React.SetStateAction<any>>;
+    setTokens: React.Dispatch<React.SetStateAction<{ name: string; value: string }[]>>;
+    setData: React.Dispatch<React.SetStateAction<any[]>>;
+    setAiRequest: React.Dispatch<React.SetStateAction<string>>;
     handleSubmit: () => void;
-    updateAiRequest: (newAiRequest: string) => void;
 }
 
 const MethodUrlContext = createContext<MethodUrlContextType | null>(null);
@@ -43,36 +49,10 @@ export const MethodUrlProvider: any = ({ children }: any) => {
     const [data, setData] = useState<any[]>([]);
     const [response, setResponse] = useState<any>();
     const [message, setMessage] = useState<any>();
+    const [statusCode, setStatusCode] = useState<number | null>(null);
+    const [responseBody, setResponseBody] = useState<any>(null);
     const [tokens, setTokens] = useState<{ name: string; value: string }[]>([]);
     const [aiRequest, setAiRequest] = useState<any>();
-
-    const updateAiRequest = (newAiRequest: string) => {
-        setAiRequest(newAiRequest);
-    };
-
-    const updateMethod = (newMethod: string) => {
-        setMethod(newMethod);
-    };
-
-    const updateUrl = (newUrl: string) => {
-        setUrl(newUrl);
-    };
-
-    const updateTokens = (newTokens: { name: string; value: string }[] = []) => {
-        setTokens(newTokens);
-    };
-
-    const updateParams = (newParams: { name: string; value: string }[] = []) => {
-        setParams(newParams);
-    };
-
-    const updateBody = (newBody: any = '') => {
-        setBody(newBody);
-    };
-
-    const updateHeaders = (newHeaders: { name: string; value: string }[] = []) => {
-        setHeaders(newHeaders);
-    };
 
     const handleSubmit = async () => {
         if (url === '') {
@@ -81,7 +61,7 @@ export const MethodUrlProvider: any = ({ children }: any) => {
         }
         try {
             const parsedBody = body ? JSON.parse(body) : null;
-            const response: any = await axios({
+            const response = await axios({
                 method: method,
                 url: url,
                 params: params.reduce((acc: any, param: any) => {
@@ -95,9 +75,14 @@ export const MethodUrlProvider: any = ({ children }: any) => {
                 data: parsedBody
             });
             setResponse(response);
+            setStatusCode(response.status);
+            setResponseBody(response.data);
+            console.log(statusCode, status, responseBody)
         } catch (error: any) {
             console.error('Error:', error);
             setResponse(error.response);
+            setStatusCode(error.response?.status ?? null);
+            setResponseBody(error.response?.data ?? null);
             setMessage(error.message);
         }
     };
@@ -109,18 +94,24 @@ export const MethodUrlProvider: any = ({ children }: any) => {
         body,
         headers,
         tokens,
-        updateMethod,
-        updateUrl,
-        updateParams,
-        updateBody,
-        updateHeaders,
-        updateTokens,
-        handleSubmit,
         data,
         response,
         message,
+        status,
+        statusCode,
+        responseBody,
         aiRequest,
-        updateAiRequest
+        setMethod,
+        setUrl,
+        setParams,
+        setBody,
+        setHeaders,
+        setTokens,
+        setStatusCode,
+        setResponseBody,
+        setData,
+        setAiRequest,
+        handleSubmit
     };
 
     return (

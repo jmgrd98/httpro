@@ -20,7 +20,7 @@ const badgeVariants = cva(
         outlinePurple:
           "border-2 border-purple-500 text-purple-500 bg-transparent",
         outlineDestructive:
-          "border-2 border-destructive text-destructive-foreground bg-transparent",
+          "border-2 border-destructive text-destructive bg-transparent",
         subtle: 
           "bg-muted text-muted-foreground hover:bg-muted/80",
         primary:

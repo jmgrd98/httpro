@@ -17,11 +17,11 @@ function Request() {
   const { 
       headers,
       tokens,
-      updateParams,
-      updateHeaders,
+    //   setParams,
+      setHeaders,
       body,
-      updateBody,
-      updateTokens,
+      setBody,
+      setTokens,
       aiRequest 
   } = useMethodUrlContext();
 
@@ -63,15 +63,15 @@ function Request() {
       if (request === 'Params') {
           const updatedParams = [...params];
           updatedParams[index][field] = value;
-          updateParams(updatedParams);
+          setParams(updatedParams);
       } else if (request === 'Headers') {
           const updatedHeaders = [...headers];
           updatedHeaders[index][field] = value;
-          updateHeaders(updatedHeaders);
+          setHeaders(updatedHeaders);
       } else if (request === 'Auth') {
           const updatedTokens = [...tokens];
           updatedTokens[index][field] = value;
-          updateTokens(updatedTokens);
+          setTokens(updatedTokens);
       }
   };
 
@@ -81,10 +81,10 @@ function Request() {
           setParams(updatedParams);
       } else if (request === 'Headers') {
           const updatedHeaders = [...headers, { name: '', value: '' }];
-          updateHeaders(updatedHeaders);
+          setHeaders(updatedHeaders);
       } else if (request === 'Auth') {
           const updatedTokens = [...tokens, { name: '', value: '' }];
-          updateTokens(updatedTokens);
+          setTokens(updatedTokens);
       }
   };
 
@@ -96,16 +96,16 @@ function Request() {
       } else if (request === 'Headers') {
           const updatedHeaders = [...headers];
           updatedHeaders.splice(index, 1);
-          updateHeaders(updatedHeaders);
+          setHeaders(updatedHeaders);
       } else if (request === 'Auth') {
           const updatedTokens = [...tokens];
           updatedTokens.splice(index, 1);
-          updateTokens(updatedTokens);
+          setTokens(updatedTokens);
       }
   };
   
   const handleBodyChange = (value: any) => {
-      updateBody(value);
+      setBody(value);
   };
   
   return (

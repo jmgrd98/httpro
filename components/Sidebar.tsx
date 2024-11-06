@@ -10,23 +10,51 @@ import Image from "next/image"
 
 const Sidebar = () => {
 
-  const { method, updateMethod, url, updateUrl, body, updateBody, headers, updateHeaders, params, updateParams } = useMethodUrlContext();
+  const { 
+    method,
+    setMethod,
+    url,
+    setUrl,
+    body,
+    setBody,
+    headers,
+    setHeaders,
+    params,
+    setParams,
+    response,
+    statusCode,
+    responseBody,
+    data,
+    setStatusCode,
+    setResponseBody
+  } = useMethodUrlContext();
+
   const [requests, setRequests] = useState<any>([]);
   const [showModal, setShowModal] = useState(false);
 
   const addNewRequest = () => {
     setRequests((prevRequests: any) => [
       ...prevRequests,
-      { method: method, url: url, body: body, headers: headers, params: params },
+      {
+        method: method,
+        url: url,
+        body: body,
+        headers: headers,
+        params: params,
+        statusCode: response?.status,
+        responseBody: response?.data,
+      },
     ]);
   };
   
   const updateInfo = (request: any) => {
-    updateMethod(request.method);
-    updateUrl(request.url);
-    updateBody(request.body);
-    updateHeaders(request.headers);
-    updateParams(request.params);
+    setMethod(request.method);
+    setUrl(request.url);
+    setBody(request.body);
+    setHeaders(request.headers);
+    setParams(request.params);
+    setStatusCode(request.statusCode);
+    setResponseBody(request.responseBody);
   };
   
 
