@@ -76,7 +76,6 @@ export const MethodUrlProvider: any = ({ children }: any) => {
             setResponse(response);
             setStatusCode(response.status);
             setResponseBody(response.data);
-            console.log(statusCode, status, responseBody)
         } catch (error: any) {
             console.error('Error:', error);
             setResponse(error.response);
