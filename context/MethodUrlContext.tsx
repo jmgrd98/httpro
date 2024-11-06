@@ -13,7 +13,6 @@ interface MethodUrlContextType {
     data: any[];
     response: any;
     message: any;
-    status: string | null;
     statusCode: number | null;
     responseBody: any;
     aiRequest: string;
