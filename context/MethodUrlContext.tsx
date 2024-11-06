@@ -97,7 +97,6 @@ export const MethodUrlProvider: any = ({ children }: any) => {
         data,
         response,
         message,
-        status,
         statusCode,
         responseBody,
         aiRequest,

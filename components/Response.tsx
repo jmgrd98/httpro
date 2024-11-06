@@ -50,15 +50,10 @@ const statusTextMap: { [statusCode: number]: string } = {
 function Response() {
   const { 
     response,
-    message,
     responseBody,
     setResponseBody,
     statusCode 
   } = useMethodUrlContext();
-
-  useEffect(() => {
-    setResponseBody(responseBody);
-  }, [responseBody]);
 
   const checkResponseMethod = () => {
     if (response?.status >= 200 && response?.status < 300) {

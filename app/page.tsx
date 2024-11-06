@@ -3,9 +3,18 @@
 import LandingHeader from "@/components/landing-header";
 import Image from "next/image";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 
 export default function Home() {
+  const { isSignedIn } = useUser();
+  const router = useRouter();
+
+  if (isSignedIn) {
+    router.push('/app');
+  };
+  
   return (
     <>
       <LandingHeader />
