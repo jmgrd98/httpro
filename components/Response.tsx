@@ -52,8 +52,7 @@ function Response() {
     response,
     message,
     responseBody,
-    setResponseBody, 
-    etStatusCode,
+    setResponseBody,
     statusCode 
   } = useMethodUrlContext();
 
