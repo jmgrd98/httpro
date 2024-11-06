@@ -3,7 +3,7 @@
 import { useMethodUrlContext } from '../context/MethodUrlContext';
 import { Badge } from './ui/badge';
 
-const statusTextMap: any = {
+const statusTextMap: { [statusCode: number]: string } = {
   100: "Continue",
   101: "Switching Protocols",
   200: "OK",
@@ -57,7 +57,7 @@ function Response() {
     } else if (response?.status >= 400 && response?.status < 500) {
       return 'destructive';
     } else {
-      return 'default';
+      return 'outline';
     }
   }
 
@@ -108,7 +108,7 @@ function Response() {
           <p className='mb-2 text-xl font-bold text-white/90'>Response</p>
           <Badge 
             variant={checkResponseMethod()}
-            className={'border-none shadow-lg my-3 p-2'}
+            className={'my-3 p-2'}
           >
             {response?.status} {getStatusText(response?.status)}
           </Badge>

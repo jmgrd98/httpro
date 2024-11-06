@@ -12,7 +12,7 @@ export default function Home() {
       <div className="flex flex-col w-full text-black min-h-screen items-center justify-between">
       <Header/>
         
-        <main className="flex items-center gap-10 h-full w-full p-5">
+        <main className="flex items-center gap-5 max-h-full w-full mb-2 px-5">
           <Request/>
           <Response/>
         </main>

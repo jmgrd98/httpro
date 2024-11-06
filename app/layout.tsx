@@ -19,7 +19,9 @@ export default function RootLayout({
     <ClerkProvider afterSignInUrl="/app" afterSignUpUrl="/app">
       <MethodUrlProvider>
       <html lang='en'>
-        <body>{children}</body>
+        <body className="h-screen w-screen"> 
+          {children}
+        </body>
       </html>
       </MethodUrlProvider>
   </ClerkProvider>

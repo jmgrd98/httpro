@@ -15,14 +15,20 @@ const Sidebar = () => {
   const [showModal, setShowModal] = useState(false);
 
   const addNewRequest = () => {
-    setRequests([...requests, { method: method, url: url, body: body, headers: headers, params: params }]);
-  }
-
+    setRequests((prevRequests: any) => [
+      ...prevRequests,
+      { method: method, url: url, body: body, headers: headers, params: params },
+    ]);
+  };
+  
   const updateInfo = (request: any) => {
     updateMethod(request.method);
     updateUrl(request.url);
     updateBody(request.body);
-  }
+    updateHeaders(request.headers);
+    updateParams(request.params);
+  };
+  
 
   const deleteRequest = (index: number) => {
     const updatedRequests = [...requests];

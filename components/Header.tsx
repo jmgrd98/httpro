@@ -74,7 +74,7 @@ const Header = () => {
   };
 
   return (
-    <div className='w-full h-[100px] top-0  p-3 flex items-center gap-5 justify-between'>
+    <div className='w-full h-[100px] top-0  px-3 py-1 flex items-center gap-5 justify-between'>
       <Select value={method} onValueChange={(e) => handleMethodChange(e)}>
         <SelectTrigger className={`w-[180px] text-white border-none ${getColorByMethod(method)}`}>
           <SelectValue placeholder="GET" />
