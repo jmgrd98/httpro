@@ -1,0 +1,15 @@
+appId: "io.github.httpro.electron-next"
+productName: "HTTPro"
+copyright: "Copyright (c) 2023 HTTPro"
+win:
+  target: 
+    - nsis
+    - portable
+    - zip
+  icon: "resources/icon.ico"
+linux:
+  target: ["dir", "appimage", "zip"]
+  icon: "resources/icon.png"
+mac:
+  target: ["dir", "dmg", "zip"]
+  icon: "resources/icon.icns"
