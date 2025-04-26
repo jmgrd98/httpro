@@ -14,13 +14,19 @@ type Platform = 'windows' | 'macos' | 'linux';
 export default function useLatestReleaseAsset(
   repo: string,
   platform: Platform
-): string | null {
+): { url: string | null; loading: boolean; error: Error | null } {
   const [url, setUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     async function fetchRelease() {
       try {
-        const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`);
+        const res = await fetch(`https://api.github.com/repos/${repo}/releases/latest`, {
+          headers: {
+            Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_ACCESS_TOKEN}`,
+          },
+        });
         if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
         const data = await res.json();
         // Find first asset whose name includes the platform keyword
@@ -34,10 +40,12 @@ export default function useLatestReleaseAsset(
         }
       } catch (err) {
         console.error('Failed to fetch GitHub release:', err);
+      } finally {
+        setLoading(false);
       }
     }
     fetchRelease();
   }, [repo, platform]);
 
-  return url;
+  return { url, loading, error };
 }

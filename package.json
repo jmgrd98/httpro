@@ -6,10 +6,11 @@
   "author": "RBFraphael",
   "description": "Electron + NextJS example project",
   "scripts": {
-    "dev": "concurrently -n \"NEXT,ELECTRON\" -c \"yellow,blue\" --kill-others \"next dev\" \"electron .\"",
-    "build": "next build && electron-builder",
-    "start": "next start",
-    "lint": "next lint"
+  "dev": "concurrently -n \"NEXT,ELECTRON\" -c \"yellow,blue\" --kill-others \"next dev\" \"electron . --no-sandbox\"",
+  "build": "next build && electron-builder --publish always",
+  "start": "next start",
+  "lint": "next lint",
+  "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.10",
