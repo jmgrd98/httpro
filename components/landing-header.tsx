@@ -8,6 +8,11 @@ import { FaGithub } from 'react-icons/fa';
 import useLatestReleaseAsset from '../hooks/useLatestReleaseAsset';
 
 function detectPlatform(): 'windows' | 'macos' | 'linux' {
+  const userAgent = navigator.userAgent.toLowerCase();
+  if (userAgent.includes('win')) return 'windows';
+  if (userAgent.includes('mac')) return 'macos';
+  if (userAgent.includes('linux')) return 'linux';
+
   const p = (navigator.platform || '').toLowerCase();
   if (p.includes('win')) return 'windows';
   if (p.includes('mac')) return 'macos';
@@ -18,17 +23,16 @@ function detectPlatform(): 'windows' | 'macos' | 'linux' {
 const LandingHeader = () => {
   const router = useRouter();
   const platform = detectPlatform();
-  // Pass your GitHub repo “owner/name” here:
-  const downloadUrl = useLatestReleaseAsset('jmgrd98/httpro', platform);
+
+  const { url, loading, error } = useLatestReleaseAsset('jmgrd98/httpro', platform);
+
 
   const handleDownload = () => {
-    if (downloadUrl) {
-      // This will navigate the browser to the installer URL,
-      // triggering a download.
-      window.location.href = downloadUrl;
-    } else {
-      alert('Fetching latest installer… please try again in a moment.');
+    if (error) {
+      alert('Error fetching download. Please try again later.');
+      return;
     }
+    if (url) window.location.href = url;
   };
 
   return (
@@ -45,8 +49,12 @@ const LandingHeader = () => {
       </div>
 
       <div className="flex items-center gap-5">
-        <Button onClick={handleDownload} variant="secondary">
-          Download desktop app
+        <Button 
+          onClick={handleDownload} 
+          variant="secondary"
+          disabled={loading}
+          >
+          {loading ? 'Loading...' : 'Download desktop app'}
         </Button>
         <Button onClick={() => router.push('/sign-in')} variant="primary">
           Go to web app
