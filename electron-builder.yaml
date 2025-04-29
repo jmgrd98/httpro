@@ -26,6 +26,6 @@ linux:
 mac:
   target:
     - dir
-    - dmg
+    # - dmg
     - zip
   icon: "resources/icon.icns"
