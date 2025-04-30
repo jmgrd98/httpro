@@ -8,6 +8,8 @@ publish:
   - provider: github     # uses GITHUB_TOKEN or GH_TOKEN
     owner: jmgrd98       # your GitHub username/org
     repo: httpro         # GitHub repo name
+    token: ${{ secrets.GITHUB_TOKEN }}
+    releaseType: release
 
 win:
   target:

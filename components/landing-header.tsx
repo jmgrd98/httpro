@@ -29,12 +29,16 @@ const LandingHeader = () => {
 
   const handleDownload = () => {
     if (error) {
-      alert('Error fetching download. Please try again later.');
+      alert(error.message); // Show specific error message
       return;
     }
-    if (url) window.location.href = url;
+    if (!url) {
+      alert('Download not available for your platform');
+      return;
+    }
+    window.location.href = url;
   };
-
+  
   return (
     <div className="bg-zinc-900 w-full h-20 flex items-center justify-between px-5 py-2 text-white">
       <div className="flex items-center gap-5">
