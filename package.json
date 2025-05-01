@@ -7,7 +7,8 @@
   "description": "Electron + NextJS example project",
   "scripts": {
     "dev": "concurrently -n \"NEXT,ELECTRON\" -c \"yellow,blue\" --kill-others \"next dev\" \"electron . --no-sandbox\"",
-    "build": "next build && electron-builder --win --mac --linux --publish always",
+    "build": "next build",
+    "build:electron": "next build && electron-builder --win --mac --linux --publish always",
     "build:all": "next build && electron-builder --win --mac --linux --publish always",
     "build:win": "next build && electron-builder --win --publish always",
     "build:mac": "next build && electron-builder --mac --publish always",
